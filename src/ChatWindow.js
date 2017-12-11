@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 
+
 // definit l'affichage du meesage et de la date dans l'historique des messages
 class ChatMessage extends Component {
     render() {
        return(
-          <p style={{marginBottom: 0}}>{this.props.message}<br/>
-          <small>{this.props.timestamp}</small></p>
+          <p style={{
+            // backgroundColor:'#F2F2F2',
+            backgroundColor:'rgb(77, 175, 111)',
+            borderRadius: '5px',
+            boxShadow:'0 0 6px #B2B2B2',
+            display: 'inline-block',
+            padding: '10px 18px',
+            position: 'relative',
+            verticalAlign: 'top',
+            marginBottom: '0'
+            }}>{this.props.message}
+        </p>
        );
     }
  };
@@ -18,32 +29,36 @@ class ChatMessage extends Component {
           
             // Détermine le style de la liste des messages envoyés
             var liStyles = {
-                backgroundColor: ( index % 2 === 1 ) ? '#ddd' : '#efefef',
+                backgroundColor: '#E2E2E4',
+                // backgroundColor: ( index % 2 === 1 ) ? '#ddd' : '#efefef',
                 padding: '1rem',
-                borderBottom: '1px solid #ddd',
-                
-                
+                // borderBottom: '1px solid #ddd',                  
             };
           
-          return <li style={liStyles}><ChatMessage message={message.message} timestamp={message.timestamp} /></li>
+          return <li style={liStyles}><ChatMessage message={message.message}  /></li>
        };
           
         var ulStyles = {
             listStyle: 'none',
             margin: 0,
-            padding: 0
+            padding: 0,
+           
         };
-
         
-       
        return <ul style={ulStyles}>{this.props.messages.map(createMessage)}</ul>;
     }
  };   
     
  var MESSAGES = [
-    { message: 'Hi Josh', timestamp: 'Tuesday' },
-    { message: 'How are you?', timestamp: 'Wednesday' }                                    
+    { message: 'Hi Josh'},
+    { message: 'How are you?'}                                    
  ];
+
+// fonction à voir pour permettre de maintenir la scroll bar en position basse  
+ function updateScroll(){
+    var element = document.getElementById("box");
+    element.scrollTop = element.scrollHeight;
+    }
                                             
  class ChatWindow extends Component {
     constructor(props){
@@ -51,15 +66,18 @@ class ChatMessage extends Component {
     
     this.state = {
           messages: MESSAGES,
-          inputText: ''
-       };
+          inputText: '', 
+       }; 
     }
     
+    
+
     handleSubmit = (e) => {
-       e.preventDefault();
-       var nextMessages = this.state.messages.concat([{ message: this.state.inputText, timestamp: 'Thursday' }]);
-       var nextInputText = '';
-       this.setState({ messages: nextMessages, inputText: nextInputText });
+        e.preventDefault();
+        var nextMessages = this.state.messages.concat([{ message: this.state.inputText, timestamp: 'Thursday' }]);
+        var nextInputText = '';
+       
+        this.setState({ messages: nextMessages, inputText: nextInputText}, );
     }
     
     onChange = (e) => {
@@ -71,39 +89,46 @@ class ChatMessage extends Component {
         maxHeight: '30em',
         maxWidth: '40em',
         margin: '1rem auto',
-        overflowY: 'scroll'
-        
+        overflow: 'scroll',
        };
        
        var formStyles = {
           display: 'flex',
+          margin: '1rem auto',
+          maxWidth: '40em' 
        };
        
         var inputStyles = {
             height: '30px',
             width: '270px',
             flex: '1 auto',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',  
         };
        
-       var btnStyles = {
-          backgroundColor: '#1EE494',
-          border: 'none',
-          color: '#336699',
-          textTransform: 'uppercase',
-          letterSpacing: '0.05em',
-          fontWeight: 'bold',
-          fontSize: '0.8em'
-       };
+        var btnStyles = {
+            backgroundColor: 'rgb(77, 175, 111)',
+            border: 'none',
+            width: '150px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            fontWeight: 'bold',
+            fontSize: '0.8em'
+        };
        
        return (
-          <div style={windowStyles}>
-             <ChatMessageHistory messages={this.state.messages} />
-             <form style={formStyles} onSubmit={this.handleSubmit}>
+        <div>
+            <div id="box">
+                <div style={windowStyles}>
+                    <ChatMessageHistory messages={this.state.messages} />
+                </div>
+            </div>
+
+            <form style={formStyles} onSubmit={this.handleSubmit}>
                 <input style={inputStyles} type="text" onChange={this.onChange} value={this.state.inputText} />
                 <button style={btnStyles}>Send</button>
-             </form>
-          </div>
+            </form>
+        
+        </div>
        );
     }
  };
