@@ -63,13 +63,3 @@ class TagReact extends React.Component {
 
 export default TagReact;
 
-
-// {
-//     addTodo(title: string) : void {
-//         this.todos = [{
-//             id: 0,
-//             title: title,
-//             completed: false
-//         }, ...this.todos]
-//     }
-// }
