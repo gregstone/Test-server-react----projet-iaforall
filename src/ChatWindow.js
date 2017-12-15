@@ -69,8 +69,6 @@ class ChatMessage extends Component {
           inputText: '', 
        }; 
     }
-    
-    
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -84,12 +82,29 @@ class ChatMessage extends Component {
        this.setState({inputText: e.target.value});
     }
 
+
+    
+    /** Fonction permettant le scroll down de la fenêtre du chat 
+     *  à chaque fois qu'un nouveau message est envoyé  
+     *  La méthode scrollIntoView fait défiler la page de manière à rendre l'élément visible.*/
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+    
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
     render() {
        var windowStyles = {  
         maxHeight: '30em',
         maxWidth: '40em',
         margin: '1rem auto',
-        overflow: 'scroll',
+        overflowY: 'scroll',
        };
        
        var formStyles = {
@@ -114,12 +129,18 @@ class ChatMessage extends Component {
             fontWeight: 'bold',
             fontSize: '0.8em'
         };
-       
+
        return (
         <div>
             <div id="box">
                 <div style={windowStyles}>
                     <ChatMessageHistory messages={this.state.messages} />
+       
+                {   /* Div vide pour en bas de la fenêtre de chat 
+                    --> permet de déclencher le scroll down à chaque évenement */ }
+                    <div style={{ float:"left", clear: "both" }}
+                        ref={(el) => { this.messagesEnd = el; }}>
+                    </div> 
                 </div>
             </div>
 
@@ -127,7 +148,7 @@ class ChatMessage extends Component {
                 <input style={inputStyles} type="text" onChange={this.onChange} value={this.state.inputText} />
                 <button style={btnStyles}>Send</button>
             </form>
-        
+
         </div>
        );
     }

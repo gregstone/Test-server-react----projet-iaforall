@@ -28,7 +28,6 @@ class App extends Component {
     console.log([this.state.items[1], this.state.items[2] ]);
   }
 
-
 render() {
     return (
         
@@ -62,6 +61,8 @@ render() {
 
         <List items={this.state.items}/>
 
+
+          
 
       </div>       
         
