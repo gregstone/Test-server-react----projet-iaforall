@@ -7,7 +7,8 @@
     "react-chat-bubble": "^0.8.7",
     "react-dom": "^16.2.0",
     "react-linkify": "^0.2.1",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "react-tag-input": "^4.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
