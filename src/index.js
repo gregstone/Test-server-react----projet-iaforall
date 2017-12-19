@@ -8,5 +8,5 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();
 
-
+// AFFICHAGE DE LA FENÊTRE DE CHAT : fichier ChatWindow.js
 ReactDOM.render(<ChatWindow />,document.getElementById('example'));

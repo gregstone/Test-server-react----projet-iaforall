@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 
-// definit l'affichage du meesage et de la date dans l'historique des messages
+// definit l'affichage des vignettes de meesage une fois envoyés
 class ChatMessage extends Component {
     render() {
        return(
           <p style={{
-            // backgroundColor:'#F2F2F2',
+    
             backgroundColor:'rgb(77, 175, 111)',
             borderRadius: '5px',
             boxShadow:'0 0 6px #B2B2B2',
@@ -30,9 +30,7 @@ class ChatMessage extends Component {
             // Détermine le style de la liste des messages envoyés
             var liStyles = {
                 backgroundColor: '#E2E2E4',
-                // backgroundColor: ( index % 2 === 1 ) ? '#ddd' : '#efefef',
-                padding: '1rem',
-                // borderBottom: '1px solid #ddd',                  
+                padding: '1rem',                  
             };
           
           return <li style={liStyles}><ChatMessage message={message.message}  /></li>
@@ -48,18 +46,16 @@ class ChatMessage extends Component {
        return <ul style={ulStyles}>{this.props.messages.map(createMessage)}</ul>;
     }
  };   
-    
+
+// MESSAGE AFFICHÉS PAR DEFAUT DANS LE CHAT 
  var MESSAGES = [
     { message: 'Hi Josh'},
     { message: 'How are you?'}                                    
  ];
 
-// fonction à voir pour permettre de maintenir la scroll bar en position basse  
- function updateScroll(){
-    var element = document.getElementById("box");
-    element.scrollTop = element.scrollHeight;
-    }
-                                            
+ 
+
+// Englobe l'ensemble des éléments de la fenêtre de chat 
  class ChatWindow extends Component {
     constructor(props){
         super(props);
@@ -86,7 +82,7 @@ class ChatMessage extends Component {
     
     /** Fonction permettant le scroll down de la fenêtre du chat 
      *  à chaque fois qu'un nouveau message est envoyé  
-     *  La méthode scrollIntoView fait défiler la page de manière à rendre l'élément visible.*/
+     *  La méthode scrollIntoView fait défiler la page de manière à rendre la div vide visible.*/
     scrollToBottom = () => {
         this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
@@ -100,6 +96,8 @@ class ChatMessage extends Component {
     }
 
     render() {
+
+    
        var windowStyles = {  
         maxHeight: '30em',
         maxWidth: '40em',
@@ -136,13 +134,15 @@ class ChatMessage extends Component {
                 <div style={windowStyles}>
                     <ChatMessageHistory messages={this.state.messages} />
        
-                {   /* Div vide pour en bas de la fenêtre de chat 
+                {   /* Div vide en bas de la fenêtre de chat 
                     --> permet de déclencher le scroll down à chaque évenement */ }
                     <div style={{ float:"left", clear: "both" }}
                         ref={(el) => { this.messagesEnd = el; }}>
                     </div> 
                 </div>
             </div>
+
+            {/* ZONE DE SAISIE DU MESSAGE  */}
 
             <form style={formStyles} onSubmit={this.handleSubmit}>
                 <input style={inputStyles} type="text" onChange={this.onChange} value={this.state.inputText} />
